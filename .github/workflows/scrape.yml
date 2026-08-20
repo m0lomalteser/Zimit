@@ -22,13 +22,12 @@ jobs:
             --shm-size=2gb \
             -v "${{ github.workspace }}/output:/output" \
             ghcr.io/openzim/zimit \
-            zimit \
-            --name apple-developer-docs \
+            --seeds "https://developer.apple.com/documentation" \
+            --name "apple-developer-docs" \
             --title "Apple Developer Documentation" \
             --workers 4 \
             --waitUntil domcontentloaded \
-            --output /output \
-            https://developer.apple.com/documentation
+            --output /output
 
       - name: Apple ZIM Artefakt hochladen
         uses: actions/upload-artifact@v4
@@ -54,13 +53,12 @@ jobs:
             --shm-size=2gb \
             -v "${{ github.workspace }}/output:/output" \
             ghcr.io/openzim/zimit \
-            zimit \
-            --name de-wikihow \
+            --seeds "https://de.wikihow.org" \
+            --name "de-wikihow" \
             --title "German wikiHow" \
             --workers 4 \
             --waitUntil domcontentloaded \
-            --output /output \
-            https://de.wikihow.org
+            --output /output
 
       - name: wikiHow ZIM Artefakt hochladen
         uses: actions/upload-artifact@v4
