@@ -22,6 +22,7 @@ jobs:
             --shm-size=2gb \
             -v "${{ github.workspace }}/output:/output" \
             ghcr.io/openzim/zimit \
+            zimit \
             --seeds "https://developer.apple.com/documentation" \
             --name "apple-developer-docs" \
             --title "Apple Developer Documentation" \
@@ -53,6 +54,7 @@ jobs:
             --shm-size=2gb \
             -v "${{ github.workspace }}/output:/output" \
             ghcr.io/openzim/zimit \
+            zimit \
             --seeds "https://de.wikihow.org" \
             --name "de-wikihow" \
             --title "German wikiHow" \
