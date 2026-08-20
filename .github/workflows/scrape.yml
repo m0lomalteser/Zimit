@@ -1,0 +1,63 @@
+name: Zimit Web Crawls
+
+on:
+  workflow_dispatch: # Ermöglicht den manuellen Start über den GitHub-Tab
+
+jobs:
+  crawl-apple:
+    name: Crawl Apple Developer Docs
+    runs-on: ubuntu-latest
+    timeout-minutes: 360 # Maximal 6 Stunden Laufzeit
+
+    steps:
+      - name: Output-Verzeichnis erstellen
+        run: mkdir -p output
+
+      - name: Zimit Docker Container starten (Apple)
+        run: |
+          docker run --rm \
+            --shm-size=2gb \
+            -v "${{ github.workspace }}/output:/output" \
+            ghcr.io/openzim/zimit \
+            zimit \
+            --url https://developer.apple.com/documentation \
+            --name apple-developer-docs \
+            --title "Apple Developer Documentation" \
+            --workers 4 \
+            --waitUntil domcontentloaded \
+            --output /output
+
+      - name: Apple ZIM Artefakt hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: apple-developer-docs-zim
+          path: output/*.zim
+
+  crawl-wikihow:
+    name: Crawl German wikiHow
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+
+    steps:
+      - name: Output-Verzeichnis erstellen
+        run: mkdir -p output
+
+      - name: Zimit Docker Container starten (wikiHow)
+        run: |
+          docker run --rm \
+            --shm-size=2gb \
+            -v "${{ github.workspace }}/output:/output" \
+            ghcr.io/openzim/zimit \
+            zimit \
+            --url https://de.wikihow.org \
+            --name de-wikihow \
+            --title "German wikiHow" \
+            --workers 4 \
+            --waitUntil domcontentloaded \
+            --output /output
+
+      - name: wikiHow ZIM Artefakt hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: de-wikihow-zim
+          path: output/*.zim
